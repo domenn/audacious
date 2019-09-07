@@ -42,6 +42,7 @@
 
 #include "main.h"
 #include "util.h"
+#include "utiltime.h"
 
 static struct {
     int help, version;
@@ -50,9 +51,11 @@ static struct {
     int mainwin, show_jump_box;
     int headless, quit_after_play;
     int verbose;
+  int log_file;
     int qt;
 } options;
 
+void setup_log_file();
 static bool initted = false;
 static Index<PlaylistAddItem> filenames;
 
@@ -77,6 +80,7 @@ static const struct {
     {"headless", 'H', & options.headless, N_("Start without a graphical interface")},
     {"quit-after-play", 'q', & options.quit_after_play, N_("Quit on playback stop")},
     {"verbose", 'V', & options.verbose, N_("Print debugging messages (may be used twice)")},
+    {"log-file", 'F', &options.log_file, N_("Debug into the file (may be used twice)")},
 #if defined(USE_QT) && defined(USE_GTK)
     {"qt", 'Q', & options.qt, N_("Run in Qt mode")},
 #endif
@@ -166,6 +170,7 @@ static bool parse_options (int argc, char * * argv)
 
     aud_set_headless_mode (options.headless);
 
+    setup_log_file();
     if (options.verbose >= 2)
         audlog::set_stderr_level (audlog::Debug);
     else if (options.verbose)
@@ -177,9 +182,36 @@ static bool parse_options (int argc, char * * argv)
     return true;
 }
 
-static void print_help ()
-{
-    static const char pad[21] = "                    ";
+void setup_log_file() {
+  if (options.log_file > 0) {
+    static FILE *fptr_gl;
+    FILE *fptr = fopen("aud_log_file.log", "a");
+    if (fptr) {
+      fptr_gl = fptr;
+      audlog::subscribe([](audlog::Level level, const char *file, int line,
+                           const char *func, const char *message) {
+
+        static int logs{0};
+        fprintf(fptr_gl,
+                "%s [%s] %s:%d [%s]: %s",
+                aud::dt::current_time_with_ms("%d.%m.%Y %H:%M:%S").c_str(),
+                get_level_name(level),
+                file,
+                line,
+                func,
+                (const char *) message);
+        if (logs++ >= 8 || level >= audlog::Warning) {
+          fflush(fptr_gl);
+          logs = 0;
+        }
+
+      }, options.log_file == 1 ? audlog::Info : audlog::Debug);
+    }
+  }
+}
+
+static void print_help() {
+  static const char pad[21] = "                    ";
 
     fprintf (stderr, "%s", _("Usage: audacious [OPTION] ... [FILE] ...\n\n"));
     fprintf (stderr, "  -1, -2, -3, etc.          %s\n", _("Select instance to run/control"));
