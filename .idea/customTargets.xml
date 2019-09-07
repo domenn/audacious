@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CLionExternalBuildManager">
+    <target id="f4525c5d-e040-426d-b671-ba60aa552ead" name="AudaciousBuiltLinux" projectName="Audacious">
+      <configuration id="fce358d3-a34a-435b-a500-1d19c28ba90b" name="AudaciousBuiltLinux" toolchainName="Default" />
+    </target>
+    <target id="b55c5115-b8a8-4d2e-b010-c5a62a3ca4a7" name="AudaciousBuiltMingw32" projectName="Audacious">
+      <configuration id="04a53f65-891b-4e7f-a079-bc5fcf7cf656" name="AudaciousBuiltMingw32" toolchainName="Mingw32" />
+    </target>
+    <target id="475aca7c-c329-4b52-be9e-df442c38f80a" name="BuildAudWindows" projectName="Audacious">
+      <configuration id="7fa068d8-c3ce-4c8f-be87-5b1f35c74749" name="BuildAudWindows" toolchainName="Mingw32">
+        <build type="TOOL">
+          <tool actionId="Tool_External Tools_MakeInCurrentDirectory" />
+        </build>
+      </configuration>
+    </target>
+  </component>
+</project>

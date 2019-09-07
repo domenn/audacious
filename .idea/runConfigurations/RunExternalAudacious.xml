@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="RunExternalAudacious" type="CLionExternalRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-F" WORKING_DIR="file://C:/aud" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Audacious" TARGET_NAME="AudaciousBuiltMingw32" CONFIG_NAME="AudaciousBuiltMingw32" RUN_PATH="C:/aud/bin/audacious.exe">
+    <envs>
+      <env name="PATH" value="C:\msys32\mingw32\bin;C:\msys32\usr\local\bin;C:\msys32\usr\bin;C:\msys32\bin;C:\Windows\System32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\:\usr\bin\site_perl:\usr\bin\vendor_perl:\usr\bin\core_perl;C:\cmake\bin;C:\GTK\bin;C:\libs\bin;C:\aud\bin" />
+    </envs>
+    <method v="2" />
+  </configuration>
+</component>

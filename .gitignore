@@ -37,3 +37,6 @@ win32/override/README.txt
 *.patch
 *.so
 *~
+
+.idea/
+cmake-build*
