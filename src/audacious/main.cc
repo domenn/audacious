@@ -35,6 +35,7 @@
 #include <libaudcore/playlist.h>
 #include <libaudcore/runtime.h>
 #include <libaudcore/tuple.h>
+#include <libaudcore/named_logger_macros.h>
 
 #ifdef USE_DBUS
 #include "aud-dbus.h"
@@ -80,7 +81,7 @@ static const struct {
     {"headless", 'H', & options.headless, N_("Start without a graphical interface")},
     {"quit-after-play", 'q', & options.quit_after_play, N_("Quit on playback stop")},
     {"verbose", 'V', & options.verbose, N_("Print debugging messages (may be used twice)")},
-    {"log-file", 'F', &options.log_file, N_("Debug into the file (may be used twice)")},
+    {"log-file", 'F', &options.log_file, N_("Debug into the file (may be used 3 times)")},
 #if defined(USE_QT) && defined(USE_GTK)
     {"qt", 'Q', & options.qt, N_("Run in Qt mode")},
 #endif
@@ -169,7 +170,6 @@ static bool parse_options (int argc, char * * argv)
     }
 
     aud_set_headless_mode (options.headless);
-
     setup_log_file();
     if (options.verbose >= 2)
         audlog::set_stderr_level (audlog::Debug);
@@ -178,6 +178,9 @@ static bool parse_options (int argc, char * * argv)
 
     if (options.qt)
         aud_set_mainloop_type (MainloopType::Qt);
+
+    L_AUD_TESTING("Created a l_aud logger.");
+    // do { audlog::log(audlog::Info, "_file_name_", 183, "_function_name_", "qqq"); } while (0)
 
     return true;
 }
@@ -205,7 +208,7 @@ void setup_log_file() {
           logs = 0;
         }
 
-      }, options.log_file == 1 ? audlog::Info : audlog::Debug);
+      }, options.log_file == 2 ? audlog::Info : options.log_file == 1 ? audlog::Warning : audlog::Debug );
     }
   }
 }

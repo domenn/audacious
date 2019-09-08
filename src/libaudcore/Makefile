@@ -82,7 +82,8 @@ INCLUDES = audio.h \
            tuple.h \
            visualizer.h \
            vfs.h \
-           vfs_async.h
+           vfs_async.h \
+           named_logger_macros.h
 
 include ../../buildsys.mk
 include ../../extra.mk
